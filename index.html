@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Duo Owl Message - Login</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: #58cc02;
+    }
+
+    .login-box {
+      width: 320px;
+      padding: 35px;
+      background: white;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-box h1 {
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: #666;
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #58cc02;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #46a302;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h1>🦉 Duo Owl Message</h1>
+
+    <p>Welcome, bestie! 💚</p>
+
+    <input
+      type="text"
+      id="username"
+      placeholder="Username"
+      autocomplete="username"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button onclick="login()">Log In</button>
+
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const correctUsername = "Duosbff";
+    const correctPassword = "Owl!7Violet#42";
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
+
+      if (
+        username === correctUsername &&
+        password === correctPassword
+      ) {
+        message.textContent = "🦉 Welcome back, bestie!";
+        message.style.color = "#58cc02";
+
+        setTimeout(() => {
+          window.location.href = "app.html";
+        }, 800);
+
+      } else {
+        message.textContent = "🦉 Nope. Duo says try again!";
+        message.style.color = "#d32f2f";
+      }
+    }
+  </script>
+
+</body>
+</html>
