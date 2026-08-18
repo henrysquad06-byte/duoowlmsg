@@ -141,9 +141,20 @@
 
   </div>
 
-  <!-- Load Duo's reply files first -->
+
+  <!-- ================================ -->
+  <!-- DUO'S BRAIN FILES                -->
+  <!-- ================================ -->
+
+  <!-- Happy replies -->
   <script src="replys/happy.js"></script>
+
+  <!-- Main conversation brain -->
   <script src="replys/brain.js"></script>
+
+  <!-- Math brain -->
+  <script src="brain/math/addition.js"></script>
+
 
   <script>
 
@@ -154,27 +165,74 @@
 
       if (text === "") return;
 
-      // Show what Henry said
+      // Show Henry's message
       addUserMessage(text);
 
-      // Give the message to Duo's brain
-      const reply = getDuoReply(text);
+      let reply = null;
 
-      // Small delay so Duo doesn't answer instantly
+
+      // ==========================================
+      // TRY THE ADDITION BRAIN FIRST
+      // ==========================================
+
+      if (typeof getAdditionReply === "function") {
+
+        reply = getAdditionReply(text);
+
+      }
+
+
+      // ==========================================
+      // IF IT WASN'T MATH, USE DUO'S MAIN BRAIN
+      // ==========================================
+
+      if (
+        reply === null &&
+        typeof getDuoReply === "function"
+      ) {
+
+        reply = getDuoReply(text);
+
+      }
+
+
+      // ==========================================
+      // EMERGENCY FALLBACK
+      // ==========================================
+
+      if (!reply) {
+
+        reply = "Hmm... my owl brain is still learning that one. 🦉🧠";
+
+      }
+
+
+      // ==========================================
+      // DUO THINKING DELAY
+      // ==========================================
+
       setTimeout(() => {
+
         addDuoMessage(reply);
+
       }, 500);
 
-      // Clear the input
+
       input.value = "";
+
     }
 
+
+    // ==========================================
+    // ADD USER MESSAGE
+    // ==========================================
 
     function addUserMessage(text) {
 
       const chat = document.getElementById("chat");
 
       const user = document.createElement("div");
+
       user.className = "user";
 
       user.innerHTML = `
@@ -186,14 +244,20 @@
       chat.appendChild(user);
 
       chat.scrollTop = chat.scrollHeight;
+
     }
 
+
+    // ==========================================
+    // ADD DUO MESSAGE
+    // ==========================================
 
     function addDuoMessage(text) {
 
       const chat = document.getElementById("chat");
 
       const duo = document.createElement("div");
+
       duo.className = "duo";
 
       duo.innerHTML = `
@@ -210,8 +274,13 @@
       chat.appendChild(duo);
 
       chat.scrollTop = chat.scrollHeight;
+
     }
 
+
+    // ==========================================
+    // SECURITY
+    // ==========================================
 
     function escapeHTML(text) {
 
@@ -220,16 +289,22 @@
       div.textContent = text;
 
       return div.innerHTML;
+
     }
 
 
-    // Press Enter to send
+    // ==========================================
+    // ENTER KEY
+    // ==========================================
+
     document
       .getElementById("messageInput")
       .addEventListener("keydown", function(event) {
 
         if (event.key === "Enter") {
+
           sendMessage();
+
         }
 
       });
