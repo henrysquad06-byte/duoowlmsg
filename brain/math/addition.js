@@ -23,7 +23,7 @@ function solveAddition(message) {
     .replace(/calculate/g, "")
     .replace(/solve/g, "")
     .replace(/please/g, "")
-    .replace(/\?/g, "")
+    .replace(/[?=]/g, "")
     .trim();
 
   // Look for two numbers with a + between them
