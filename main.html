@@ -141,58 +141,37 @@
 
   </div>
 
-  <!-- Load Duo's happy messages -->
+  <!-- Load Duo's reply files first -->
   <script src="replys/happy.js"></script>
+  <script src="replys/brain.js"></script>
 
   <script>
-    const otherReplies = [
-      "Hmm... interesting. 👀",
-      "I'm listening, bestie! 🦉",
-      "Okay, tell me more!",
-      "My owl brain is thinking... 🤔",
-      "That's actually pretty cool!",
-      "Wait... what? 😂",
-      "You have my full attention. 👀",
-      "Okay Henry, I'm here!",
-      "I have absolutely no idea what to say to that. 😭",
-      "Interesting... very interesting. 🦉"
-    ];
-
-    function randomReply(list) {
-      return list[Math.floor(Math.random() * list.length)];
-    }
 
     function sendMessage() {
+
       const input = document.getElementById("messageInput");
       const text = input.value.trim();
 
       if (text === "") return;
 
+      // Show what Henry said
       addUserMessage(text);
 
-      const lower = text.toLowerCase();
-      let reply;
+      // Give the message to Duo's brain
+      const reply = getDuoReply(text);
 
-      if (
-        lower.includes("hello") ||
-        lower.includes("hi") ||
-        lower.includes("hey") ||
-        lower.includes("good morning") ||
-        lower.includes("good night")
-      ) {
-        reply = randomReply(happyMessages);
-      } else {
-        reply = randomReply(otherReplies);
-      }
-
+      // Small delay so Duo doesn't answer instantly
       setTimeout(() => {
         addDuoMessage(reply);
       }, 500);
 
+      // Clear the input
       input.value = "";
     }
 
+
     function addUserMessage(text) {
+
       const chat = document.getElementById("chat");
 
       const user = document.createElement("div");
@@ -205,37 +184,56 @@
       `;
 
       chat.appendChild(user);
+
       chat.scrollTop = chat.scrollHeight;
     }
 
+
     function addDuoMessage(text) {
+
       const chat = document.getElementById("chat");
 
       const duo = document.createElement("div");
       duo.className = "duo";
 
       duo.innerHTML = `
-        <img src="assets/duolingo_hi.png" alt="Duo">
-        <div class="bubble">${escapeHTML(text)}</div>
+        <img
+          src="assets/duolingo_hi.png"
+          alt="Duo"
+        >
+
+        <div class="bubble">
+          ${escapeHTML(text)}
+        </div>
       `;
 
       chat.appendChild(duo);
+
       chat.scrollTop = chat.scrollHeight;
     }
 
+
     function escapeHTML(text) {
+
       const div = document.createElement("div");
+
       div.textContent = text;
+
       return div.innerHTML;
     }
 
+
+    // Press Enter to send
     document
       .getElementById("messageInput")
       .addEventListener("keydown", function(event) {
+
         if (event.key === "Enter") {
           sendMessage();
         }
+
       });
+
   </script>
 
 </body>
